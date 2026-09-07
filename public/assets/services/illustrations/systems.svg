@@ -1,0 +1,77 @@
+<svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="sy-glow" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#1c3a1f"/>
+      <stop offset="100%" stop-color="#0a1710"/>
+    </radialGradient>
+    <linearGradient id="sy-accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8df252"/>
+      <stop offset="100%" stop-color="#3f9e1c"/>
+    </linearGradient>
+    <pattern id="sy-dots" width="34" height="34" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.4" fill="#ffffff" opacity=".08"/>
+    </pattern>
+  </defs>
+
+  <rect width="1000" height="1000" fill="url(#sy-glow)"/>
+  <rect width="1000" height="1000" fill="url(#sy-dots)"/>
+
+  <!-- connecting lines between nodes -->
+  <g stroke="#8df252" stroke-opacity=".35" stroke-width="2" fill="none">
+    <path d="M240 260 L 470 200"/>
+    <path d="M240 260 L 240 520"/>
+    <path d="M470 200 L 740 300"/>
+    <path d="M240 520 L 470 620"/>
+    <path d="M470 620 L 740 560"/>
+    <path d="M740 300 L 740 560"/>
+    <path d="M470 200 L 470 620"/>
+  </g>
+
+  <!-- database cylinder node -->
+  <g transform="translate(180,470)">
+    <ellipse cx="60" cy="16" rx="60" ry="18" fill="#0d1c12" stroke="#ffffff" stroke-opacity=".2"/>
+    <path d="M0 16 L0 90 A60 18 0 0 0 120 90 L120 16" fill="#0d1c12" stroke="#ffffff" stroke-opacity=".2"/>
+    <ellipse cx="60" cy="90" rx="60" ry="18" fill="none" stroke="#ffffff" stroke-opacity=".2"/>
+    <ellipse cx="60" cy="16" rx="60" ry="18" fill="url(#sy-accent)" opacity=".8"/>
+  </g>
+
+  <!-- workflow card node -->
+  <g transform="translate(400,120)">
+    <rect x="0" y="0" width="150" height="150" rx="20" fill="#0d1c12" stroke="#ffffff" stroke-opacity=".2"/>
+    <rect x="24" y="30" width="102" height="12" rx="6" fill="#ffffff" opacity=".5"/>
+    <rect x="24" y="54" width="70" height="10" rx="5" fill="#ffffff" opacity=".3"/>
+    <circle cx="75" cy="104" r="26" fill="url(#sy-accent)" opacity=".85"/>
+    <path d="M64 104 l8 8 l16 -18" stroke="#0a1710" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- gauge / dial node -->
+  <g transform="translate(660,230)">
+    <circle cx="80" cy="80" r="80" fill="#0d1c12" stroke="#ffffff" stroke-opacity=".2"/>
+    <path d="M30 110 A55 55 0 1 1 130 110" fill="none" stroke="#ffffff" stroke-opacity=".18" stroke-width="12"/>
+    <path d="M30 110 A55 55 0 0 1 108 46" fill="none" stroke="url(#sy-accent)" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="80" cy="80" r="6" fill="#8df252"/>
+    <line x1="80" y1="80" x2="108" y2="46" stroke="#8df252" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- flow / pipeline node -->
+  <g transform="translate(400,560)">
+    <rect x="0" y="0" width="150" height="120" rx="18" fill="#0d1c12" stroke="#ffffff" stroke-opacity=".2"/>
+    <rect x="20" y="26" width="110" height="16" rx="8" fill="url(#sy-accent)" opacity=".9"/>
+    <rect x="20" y="52" width="80" height="10" rx="5" fill="#ffffff" opacity=".4"/>
+    <rect x="20" y="72" width="100" height="10" rx="5" fill="#ffffff" opacity=".28"/>
+  </g>
+
+  <!-- secondary process node -->
+  <g transform="translate(660,470)">
+    <rect x="0" y="0" width="150" height="120" rx="18" fill="#0d1c12" stroke="#ffffff" stroke-opacity=".2"/>
+    <circle cx="40" cy="40" r="16" fill="#8df252" opacity=".7"/>
+    <circle cx="80" cy="40" r="16" fill="#ffffff" opacity=".16"/>
+    <circle cx="120" cy="40" r="16" fill="#ffffff" opacity=".16"/>
+    <rect x="20" y="80" width="110" height="10" rx="5" fill="#ffffff" opacity=".35"/>
+  </g>
+
+  <circle cx="740" cy="300" r="6" fill="#8df252"/>
+  <circle cx="470" cy="200" r="6" fill="#8df252"/>
+  <circle cx="240" cy="260" r="6" fill="#8df252"/>
+  <circle cx="150" cy="750" r="3" fill="#ffffff" opacity=".3"/>
+</svg>

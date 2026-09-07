@@ -1,0 +1,69 @@
+<svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="wd-glow" cx="50%" cy="38%" r="65%">
+      <stop offset="0%" stop-color="#1c3a1f"/>
+      <stop offset="100%" stop-color="#0a1710"/>
+    </radialGradient>
+    <linearGradient id="wd-accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8df252"/>
+      <stop offset="100%" stop-color="#3f9e1c"/>
+    </linearGradient>
+    <pattern id="wd-dots" width="34" height="34" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.4" fill="#ffffff" opacity=".08"/>
+    </pattern>
+  </defs>
+
+  <rect width="1000" height="1000" fill="url(#wd-glow)"/>
+  <rect width="1000" height="1000" fill="url(#wd-dots)"/>
+
+  <!-- desktop browser frame -->
+  <g transform="translate(120,150)">
+    <rect x="0" y="0" width="640" height="440" rx="18" fill="#0d1c12" stroke="#ffffff" stroke-opacity=".14"/>
+    <rect x="0" y="0" width="640" height="46" rx="18" fill="#101f15"/>
+    <rect x="0" y="28" width="640" height="18" fill="#101f15"/>
+    <circle cx="26" cy="23" r="6" fill="#ff6b6b" opacity=".85"/>
+    <circle cx="46" cy="23" r="6" fill="#ffd166" opacity=".85"/>
+    <circle cx="66" cy="23" r="6" fill="#8df252" opacity=".85"/>
+    <rect x="96" y="14" width="420" height="18" rx="9" fill="#ffffff" opacity=".08"/>
+
+    <!-- page layout blocks -->
+    <rect x="26" y="72" width="220" height="120" rx="10" fill="url(#wd-accent)" opacity=".92"/>
+    <rect x="260" y="72" width="354" height="16" rx="8" fill="#ffffff" opacity=".85"/>
+    <rect x="260" y="98" width="300" height="12" rx="6" fill="#ffffff" opacity=".4"/>
+    <rect x="260" y="118" width="320" height="12" rx="6" fill="#ffffff" opacity=".4"/>
+    <rect x="260" y="138" width="140" height="34" rx="17" fill="#8df252"/>
+
+    <rect x="26" y="216" width="182" height="200" rx="12" fill="#ffffff" opacity=".06" stroke="#ffffff" stroke-opacity=".14"/>
+    <rect x="229" y="216" width="182" height="200" rx="12" fill="#ffffff" opacity=".06" stroke="#ffffff" stroke-opacity=".14"/>
+    <rect x="432" y="216" width="182" height="200" rx="12" fill="#ffffff" opacity=".06" stroke="#ffffff" stroke-opacity=".14"/>
+    <rect x="46" y="236" width="90" height="90" rx="8" fill="#ffffff" opacity=".14"/>
+    <rect x="249" y="236" width="90" height="90" rx="8" fill="#8df252" opacity=".5"/>
+    <rect x="452" y="236" width="90" height="90" rx="8" fill="#ffffff" opacity=".14"/>
+    <rect x="46" y="344" width="150" height="10" rx="5" fill="#ffffff" opacity=".4"/>
+    <rect x="249" y="344" width="150" height="10" rx="5" fill="#ffffff" opacity=".4"/>
+    <rect x="452" y="344" width="150" height="10" rx="5" fill="#ffffff" opacity=".4"/>
+  </g>
+
+  <!-- floating mobile frame, responsive companion -->
+  <g transform="translate(700,430)">
+    <rect x="0" y="0" width="200" height="380" rx="30" fill="#0d1c12" stroke="#ffffff" stroke-opacity=".18"/>
+    <rect x="12" y="24" width="176" height="332" rx="14" fill="#101f15"/>
+    <rect x="28" y="46" width="144" height="70" rx="10" fill="url(#wd-accent)" opacity=".9"/>
+    <rect x="28" y="130" width="144" height="10" rx="5" fill="#ffffff" opacity=".5"/>
+    <rect x="28" y="150" width="110" height="10" rx="5" fill="#ffffff" opacity=".3"/>
+    <rect x="28" y="184" width="65" height="65" rx="8" fill="#ffffff" opacity=".12"/>
+    <rect x="107" y="184" width="65" height="65" rx="8" fill="#ffffff" opacity=".12"/>
+    <rect x="28" y="266" width="144" height="36" rx="18" fill="#8df252"/>
+  </g>
+
+  <!-- connector cursor / pointer -->
+  <g transform="translate(640,600)">
+    <path d="M0 0 L0 34 L9 25 L16 40 L23 37 L16 22 L28 22 Z" fill="#8df252"/>
+  </g>
+
+  <!-- ambient accent lines -->
+  <path d="M120 690 C 340 760, 620 760, 860 640" stroke="#8df252" stroke-opacity=".22" stroke-width="2" fill="none"/>
+  <circle cx="200" cy="120" r="3" fill="#8df252" opacity=".6"/>
+  <circle cx="880" cy="200" r="3" fill="#8df252" opacity=".6"/>
+  <circle cx="900" cy="760" r="4" fill="#ffffff" opacity=".3"/>
+</svg>
