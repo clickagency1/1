@@ -1,5 +1,7 @@
 import crypto from 'node:crypto'
+import { spawn } from 'node:child_process'
 import { existsSync } from 'node:fs'
+import http from 'node:http'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -131,20 +133,62 @@ app.get('/auth/google/token', (request, response) => {
   response.json({ idToken })
 })
 
-// Serve the Vite client when this process is used as the production web server.
-const clientCandidates = [
-  path.resolve(__dirname, '../dist/client'),
-  path.resolve(__dirname, '../.vercel/output/static'),
-  path.resolve(__dirname, '../.output/public'),
-  path.resolve(__dirname, '../dist'),
-]
-const clientDir = clientCandidates.find((candidate) => existsSync(path.join(candidate, 'index.html'))) ?? clientCandidates[0]
-app.use(express.static(clientDir))
-app.get(/.*/, (request, response, next) => {
-  if (request.path.startsWith('/auth/')) return next()
-  response.sendFile(path.join(clientDir, 'index.html'))
+// TanStack Start renders through Nitro and has no static index.html. Run the
+// built Nitro server privately, while Express remains the public OAuth gateway.
+const nitroEntry = path.resolve(__dirname, '../.output/server/index.mjs')
+const nitroPort = Number(process.env.NITRO_INTERNAL_PORT || port + 1)
+
+if (!existsSync(nitroEntry)) {
+  throw new Error(`Nitro server build was not found at ${nitroEntry}. Run npm run build first.`)
+}
+
+const nitroProcess = spawn(process.execPath, [nitroEntry], {
+  env: {
+    ...process.env,
+    PORT: String(nitroPort),
+    HOST: '127.0.0.1',
+    NITRO_PORT: String(nitroPort),
+    NITRO_HOST: '127.0.0.1',
+  },
+  stdio: 'inherit',
+})
+
+nitroProcess.on('exit', (code, signal) => {
+  console.error(`Nitro server stopped (code=${code}, signal=${signal || 'none'})`)
+  process.exit(code || 1)
+})
+
+app.use((request, response) => {
+  const proxy = http.request(
+    {
+      hostname: '127.0.0.1',
+      port: nitroPort,
+      path: request.originalUrl,
+      method: request.method,
+      headers: { ...request.headers, host: `127.0.0.1:${nitroPort}` },
+    },
+    (upstream) => {
+      response.writeHead(upstream.statusCode || 502, upstream.headers)
+      upstream.pipe(response)
+    },
+  )
+
+  proxy.on('error', (error) => {
+    console.error('Nitro proxy failed', error)
+    if (!response.headersSent) response.status(503).send('Application server is starting. Please retry shortly.')
+    else response.end()
+  })
+  request.pipe(proxy)
 })
 
 app.listen(port, () => {
   console.log(`Click Agency Express server listening on ${appUrl}`)
 })
+
+function stopServers(signal) {
+  nitroProcess.kill(signal)
+  process.exit(0)
+}
+
+process.on('SIGTERM', () => stopServers('SIGTERM'))
+process.on('SIGINT', () => stopServers('SIGINT'))
