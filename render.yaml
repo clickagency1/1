@@ -2,7 +2,7 @@ services:
   - type: web
     name: click-agency
     runtime: node
-    buildCommand: npm install && npm run build
+    buildCommand: npm ci --include=dev && npm run build
     startCommand: npm run start:express
     healthCheckPath: /
     envVars:
