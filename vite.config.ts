@@ -12,7 +12,9 @@ const config = defineConfig({
     }),
     tailwindcss(),
     tanstackStart(),
-    nitro({ config: { preset: 'vercel' } }),
+    // Render runs the Node server directly, so use Nitro's Node output rather
+    // than the Vercel function output (which has no standalone index.html).
+    nitro({ config: { preset: 'node-server' } }),
     viteReact(),
   ],
 })
