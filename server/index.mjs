@@ -1,4 +1,5 @@
 import crypto from 'node:crypto'
+import { existsSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -131,7 +132,13 @@ app.get('/auth/google/token', (request, response) => {
 })
 
 // Serve the Vite client when this process is used as the production web server.
-const clientDir = path.resolve(__dirname, '../dist/client')
+const clientCandidates = [
+  path.resolve(__dirname, '../dist/client'),
+  path.resolve(__dirname, '../.vercel/output/static'),
+  path.resolve(__dirname, '../.output/public'),
+  path.resolve(__dirname, '../dist'),
+]
+const clientDir = clientCandidates.find((candidate) => existsSync(path.join(candidate, 'index.html'))) ?? clientCandidates[0]
 app.use(express.static(clientDir))
 app.get(/.*/, (request, response, next) => {
   if (request.path.startsWith('/auth/')) return next()
