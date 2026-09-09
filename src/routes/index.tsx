@@ -22,6 +22,8 @@ import { useLanguage, type Language } from '../lib/i18n'
 import { trackGlow } from '../lib/liquid-glass'
 import { supabase } from '../lib/supabase'
 
+const authServerUrl = (import.meta.env.VITE_AUTH_SERVER_URL || '').replace(/\/$/, '')
+
 export const Route = createFileRoute('/')({
   component: HomePage,
 })
@@ -208,7 +210,7 @@ function HomePage() {
         return
       }
       try {
-        const tokenResponse = await fetch('/auth/google/token', { credentials: 'include', headers: { Accept: 'application/json' } })
+        const tokenResponse = await fetch(`${authServerUrl}/auth/google/token`, { credentials: 'include', headers: { Accept: 'application/json' } })
         if (!tokenResponse.ok) throw new Error('Google token endpoint returned an error')
         const payload = (await tokenResponse.json()) as { idToken?: string }
         if (!payload.idToken) throw new Error('Google ID token is missing')
@@ -325,7 +327,7 @@ function HomePage() {
     // domain/app configuration. The server returns a one-time ID token,
     // which Supabase exchanges for the normal RLS-backed session.
     const returnTo = `${window.location.pathname}${window.location.search}${window.location.hash}`
-    window.location.assign(`/auth/google?returnTo=${encodeURIComponent(returnTo)}`)
+    window.location.assign(`${authServerUrl}/auth/google?returnTo=${encodeURIComponent(returnTo)}`)
   }
 
   const handleLogout = async () => {
