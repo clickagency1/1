@@ -69,6 +69,24 @@ function requireConfig(response) {
   return false
 }
 
+// The frontend can remain on Vercel while OAuth runs on the Render subdomain.
+// Allow only the configured frontend origin to read the one-time token.
+app.use('/auth', (request, response, next) => {
+  const origin = request.headers.origin
+  if (origin && origin === frontendOrigin) {
+    response.setHeader('Access-Control-Allow-Origin', frontendOrigin)
+    response.setHeader('Access-Control-Allow-Credentials', 'true')
+    response.setHeader('Vary', 'Origin')
+  }
+  if (request.method === 'OPTIONS') {
+    response.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS')
+    response.setHeader('Access-Control-Allow-Headers', 'Accept, Content-Type')
+    response.sendStatus(204)
+    return
+  }
+  next()
+})
+
 app.get('/auth/google', (request, response) => {
   if (!requireConfig(response)) return
   const state = crypto.randomBytes(32).toString('base64url')
